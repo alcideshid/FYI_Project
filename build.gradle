@@ -1,0 +1,58 @@
+apply plugin: 'java'
+apply plugin: 'idea'
+
+buildscript {
+    repositories {
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+    }
+    dependencies {
+        classpath("net.serenity-bdd:serenity-gradle-plugin:4.0.12")
+    }
+}
+
+ext {
+    slf4jVersion = '1.7.7'
+    serenityVersion = '4.0.12'
+    cucumberVersion = '7.14.0'
+    junitVersion = '4.13.2'
+    assertJVersion = '3.24.0'
+    logbackVersion = '1.18.30'
+}
+
+repositories {
+    mavenCentral()
+    google()
+}
+
+dependencies {
+
+    implementation "net.serenity-bdd:serenity-screenplay:${serenityVersion}"
+    implementation "net.serenity-bdd:serenity-cucumber:${serenityVersion}"
+    implementation "net.serenity-bdd:serenity-core:${serenityVersion}"
+    implementation "net.serenity-bdd:serenity-screenplay-webdriver:${serenityVersion}"
+    implementation "net.serenity-bdd:serenity-ensure:${serenityVersion}"
+    implementation "org.assertj:assertj-core:${assertJVersion}"
+    implementation "org.junit.platform:junit-platform-launcher:1.8.2"
+    testImplementation group: 'io.cucumber', name: 'datatable', version: '7.14.0'
+    testImplementation group: 'io.cucumber', name: 'cucumber-junit', version: '7.14.0'
+}
+
+apply plugin: "net.serenity-bdd.serenity-gradle-plugin"
+
+test {
+    testLogging.showStandardStreams = false
+    systemProperties System.getProperties()
+}
+
+compileJava.options.encoding = "UTF-8"
+compileTestJava.options.encoding = "UTF-8"
+
+serenity {
+    reports = ["single-page-html"]
+}
+
+gradle.startParameter.continueOnFailure = true
+test.finalizedBy(aggregate)
+
