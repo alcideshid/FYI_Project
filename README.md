@@ -2,7 +2,7 @@
 
 ## Tools used and versions
 - IntelliJ IDEA 2024.3 (Community Edition)
-- Java 11
+- Java 11 (corretto-11)
 - Gradle 8.5
 - slf4jVersion = '1.7.7'
 - serenityVersion = '4.0.12'
